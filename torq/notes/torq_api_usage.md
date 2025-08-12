@@ -172,7 +172,7 @@ curl -X GET "https://api.torq.io/v1/workflows/{workflowId}/revisions/{revisionId
 Import Workflow
 
 curl -X POST "https://api.torq.io/v1/workflows/import" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: Bearer $TORQ_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
         "yaml": "BASE64_ENCODED_YAML_CONTENT"
