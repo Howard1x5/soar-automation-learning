@@ -72,6 +72,58 @@ Integration typically involves:
 
 ---
 
+---
+
+## 3. Containers vs Artifacts
+
+Splunk SOAR models incidents using a two-level structure: containers and artifacts.
+
+### Containers
+A container represents a single case, alert, or incident. It is the top-level object used for:
+- Case tracking
+- Workflow execution
+- Status and severity assignment
+- Analyst collaboration and auditability
+
+Examples of containers:
+- A phishing email alert
+- An EDR malware detection
+- A suspicious login event
+
+A container answers the question:
+**“What happened?”**
+
+---
+
+### Artifacts
+Artifacts are individual pieces of data associated with a container. They provide the raw inputs used by actions and playbooks.
+
+Common artifact types:
+- IP addresses
+- Domains
+- URLs
+- File hashes
+- Usernames
+- Hostnames
+- Email addresses
+
+Artifacts answer the question:
+**“What data do we have about this incident?”**
+
+---
+
+### Why the distinction matters
+- Playbooks typically operate on artifacts, not containers directly
+- Actions are executed against artifact values
+- Poor artifact normalization leads to broken or skipped automation
+- Multiple artifacts can exist within a single container, enabling parallel enrichment and decision-making
+
+Understanding this separation is critical for:
+- Designing reliable playbooks
+- Debugging failed actions
+- Controlling automation scope and impact
+
+
 ## Notes / Open Questions
 
 - How containers are created (push vs pull)
