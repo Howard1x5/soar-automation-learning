@@ -148,3 +148,17 @@ Environment notes:
 
 This instance is intended as a learning lab and integration substrate, not a production deployment.
 
+---
+
+## Initial Data Ingestion Test
+
+A local lab log file was ingested to validate end-to-end event handling.
+
+- Custom sourcetype (`soar:test`) created and assigned
+- Log file monitored from a controlled lab directory
+- Events indexed into `main`
+- Event preview used to validate timestamp parsing and structure
+- Verified `_source`, `_sourcetype`, and `_host` values post-ingestion
+
+This exercise establishes the baseline event structure that downstream alerts and SOAR automations will consume.
+
