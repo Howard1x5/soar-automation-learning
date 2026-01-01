@@ -162,3 +162,128 @@ A local lab log file was ingested to validate end-to-end event handling.
 
 This exercise establishes the baseline event structure that downstream alerts and SOAR automations will consume.
 
+---
+
+## Local Event Ingestion and Alert Creation (SOAR Signal Prep)
+
+### Objective
+Create a realistic, minimal event → alert pipeline in Splunk to ensure SOAR has deterministic, well-structured signals to consume. This validates that events, searches, scheduling, and alert actions behave as expected before introducing SOAR.
+
+---
+
+### Test Data Setup
+- Created a local lab directory:
+```
+
+~/Documents/Projects/splunk-labs/
+
+```
+- Added a test log file:
+```
+
+soar_test.log
+
+```
+- Log entries simulate authentication activity:
+- Successful logins
+- Blocked actions
+- Failed logins
+- Purpose: emulate a common SOC signal (auth failures) without relying on external integrations.
+
+---
+
+### Data Ingestion
+- Added file input via **Add Data → Files & Directories**
+- Monitored:
+```
+
+~/Documents/Projects/splunk-labs/soar_test.log
+
+```
+- Created custom sourcetype:
+```
+
+soar:test
+
+```
+- Indexed data into:
+```
+
+index=main
+
+```
+- Verified events indexed and searchable.
+
+---
+
+### Detection Search
+Created an aggregation search to summarize authentication failures:
+
+- Groups by `user` and `ip`
+- Counts failures
+- Assigns severity based on failure count
+
+This search is designed to:
+- Reduce event noise
+- Produce alert-friendly output
+- Match common SOAR ingestion patterns (one alert per entity)
+
+---
+
+### Alert Configuration
+Saved the search as a **Scheduled Alert**:
+
+- Alert Name:
+```
+
+SOAR - Auth Failure Alert
+
+```
+- Schedule:
+- Cron: `*/5 * * * *` (every 5 minutes)
+- Time range: `Last 5 minutes`
+- Trigger condition:
+- Trigger when **Number of Results > 0**
+- Trigger once per execution (not per result)
+
+---
+
+### Trigger Action
+Configured a required trigger action to persist alert execution:
+
+- Action: **Log Event**
+- Logged fields:
+- Alert name
+- Result count
+- Destination:
+- `index=main`
+- Default sourcetype
+
+Purpose:
+- Ensure alert execution produces an auditable event
+- Validate end-to-end flow: event → alert → secondary event
+
+---
+
+### Outcome
+- Confirmed:
+- Custom sourcetype creation
+- Local file ingestion
+- Aggregation search behavior
+- Cron-based alert scheduling
+- Alert execution with logged output
+- Resulting alert is suitable as a SOAR ingestion source.
+
+---
+
+### Notes
+- SOAR depends on alerts built from events; skipping this layer leads to fragile automation.
+- This exercise surfaced real configuration touchpoints:
+- Sourcetypes
+- Time ranges
+- Cron scheduling
+- Required alert actions
+- This forms the baseline signal pipeline for later SOAR playbooks.
+```
+
+---
