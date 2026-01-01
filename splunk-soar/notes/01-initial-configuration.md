@@ -132,3 +132,19 @@ Understanding this separation is critical for:
 - Version-specific behavior differences
 
 These will be revisited after hands-on setup.
+
+---
+
+## Local Splunk Enterprise Installation (Lab Environment)
+
+Splunk Enterprise was installed locally to support Splunk SOAR integration and hands-on study.
+
+Environment notes:
+- Installed Splunk 10.0.2 via `.deb` on Ubuntu
+- Installed using `dpkg`
+- Initial startup completed successfully
+- Web UI accessible at `http://localhost:8000`
+- Internal logs available and searchable (`index=_internal`)
+
+This instance is intended as a learning lab and integration substrate, not a production deployment.
+
