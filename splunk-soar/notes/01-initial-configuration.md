@@ -276,6 +276,15 @@ Purpose:
 
 ---
 
+### Alert Output Validation (Step 9)
+
+Validated that the scheduled alert produces a concrete, searchable event suitable for downstream SOAR ingestion.
+
+Validation steps:
+- Executed search against alert-generated events:
+
+---
+
 ### Notes
 - SOAR depends on alerts built from events; skipping this layer leads to fragile automation.
 - This exercise surfaced real configuration touchpoints:
